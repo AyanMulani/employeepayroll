@@ -1,9 +1,10 @@
 \
-import os, datetime, io, csv, hashlib, secrets
+import os, datetime, io, csv, secrets
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, send_file, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 import pandas as pd
@@ -14,7 +15,10 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY','dev-hr-key')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///payroll_hr.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    "DATABASE_URL",
+    "sqlite:///payroll_hr.db"
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024
@@ -92,7 +96,11 @@ def load_user(user_id):
     return Admin.query.get(int(user_id))
 
 def hash_password(password):
-    return hashlib.sha256(password.encode('utf-8')).hexdigest()
+    return generate_password_hash(password)
+
+def verify_password(hash_val, password):
+    return check_password_hash(hash_val, password)
+
 
 def log_action(user, action):
     db.session.add(AuditLog(user=user, action=action))
@@ -117,7 +125,8 @@ def login():
     if request.method=='POST':
         u = request.form.get('username'); p = request.form.get('password')
         user = Admin.query.filter_by(username=u).first()
-        if user and user.password_hash == hash_password(p):
+        if user and verify_password(user.password_hash, p):
+
             login_user(user)
             log_action(user.username, 'login')
             return redirect(url_for('index'))
@@ -334,13 +343,15 @@ def payroll_pdf(pid):
     return send_file(buf, as_attachment=True, download_name=f'pay_{emp.emp_code}_{p.month}_{p.year}.pdf', mimetype='application/pdf')
 
 # helper: password hashing wrapper
-def hash_password(p): return hashlib.sha256(p.encode('utf-8')).hexdigest()
 
 # simple API status
 @app.route('/status')
 def status(): return jsonify({'ok':True,'version':'hr-1.0'})
 
 if __name__ == '__main__':
-    with app.app_context(): db.create_all()
-    print('DB:', os.path.abspath('payroll_hr.db'), 'uploads:', UPLOAD_FOLDER)
-    app.run(debug=True)
+    with app.app_context():
+        db.create_all()
+
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
