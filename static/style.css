@@ -6,12 +6,9 @@
     --success:#16a34a;
     --danger:#dc2626;
     --bg:#f3f6fb;
-    --glass:rgba(255,255,255,0.7);
+    --glass:rgba(255,255,255,0.75);
     --text:#0f172a;
-    --shadow:0 15px 40px rgba(0,0,0,0.08);
 }
-
-/* ================= GLOBAL ================= */
 
 *{
     margin:0;
@@ -19,129 +16,80 @@
     box-sizing:border-box;
 }
 
-html{
-    scroll-behavior:smooth;
-}
-
 body{
     font-family:'Inter', sans-serif;
     background:linear-gradient(135deg,#eef2ff,#f8fafc);
     color:var(--text);
-    min-height:100vh;
-    transition:0.4s ease;
-    animation:fadeIn 0.8s ease;
+    transition:0.3s ease;
 }
 
-/* Floating background effect */
-body::before,
-body::after{
-    content:"";
-    position:fixed;
-    width:400px;
-    height:400px;
-    border-radius:50%;
-    background:radial-gradient(circle,var(--primary),transparent);
-    opacity:0.15;
-    z-index:-1;
-    animation:float 8s infinite alternate ease-in-out;
-}
-
-body::before{ top:-100px; left:-100px; }
-body::after{ bottom:-100px; right:-100px; }
-
-@keyframes float{
-    from{ transform:translateY(0); }
-    to{ transform:translateY(40px); }
-}
-
-@keyframes fadeIn{
-    from{ opacity:0; transform:translateY(10px); }
-    to{ opacity:1; transform:translateY(0); }
-}
-
-/* ================= NAVBAR ================= */
-
+/* ===== NAVBAR ===== */
 .navbar{
     background:linear-gradient(90deg,var(--primary),var(--primary-dark)) !important;
-    padding:16px 30px;
-    box-shadow:0 10px 40px rgba(37,99,235,0.35);
+    padding:14px 30px;
+    box-shadow:0 10px 30px rgba(37,99,235,0.35);
 }
 
 .navbar-brand{
     font-weight:700;
     color:#fff !important;
-    font-size:19px;
+    font-size:18px;
+    letter-spacing:0.3px;
 }
 
-/* ================= CARDS ================= */
+.navbar .btn{
+    border-radius:12px;
+    font-weight:500;
+}
 
+/* ===== CARDS ===== */
 .card{
-    position:relative;
     border:none;
-    border-radius:22px;
+    border-radius:20px;
     background:var(--glass);
-    backdrop-filter:blur(18px);
-    padding:20px;
-    box-shadow:var(--shadow);
-    transition:0.35s cubic-bezier(.4,2,.6,1);
+    backdrop-filter:blur(14px);
+    box-shadow:0 20px 50px rgba(0,0,0,0.07);
+    transition:all 0.3s ease;
 }
 
 .card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 30px 60px rgba(37,99,235,0.2);
+    transform:translateY(-5px);
+    box-shadow:0 30px 60px rgba(37,99,235,0.15);
 }
 
-/* Animated gradient border */
-.card::before{
-    content:"";
-    position:absolute;
-    inset:-2px;
-    background:linear-gradient(135deg,#2563eb,#7c3aed,#06b6d4);
-    border-radius:24px;
-    z-index:-1;
-    animation:hue 6s linear infinite;
+.card-header{
+    background:transparent;
+    font-weight:600;
+    padding:18px 22px;
+    border-bottom:1px solid #e2e8f0;
 }
 
-.card::after{
-    content:"";
-    position:absolute;
-    inset:2px;
-    background:var(--glass);
-    border-radius:20px;
-    z-index:-1;
+/* ===== FORM ELEMENTS ===== */
+label{
+    font-size:13px;
+    font-weight:500;
 }
-
-@keyframes hue{
-    from{ filter:hue-rotate(0deg); }
-    to{ filter:hue-rotate(360deg); }
-}
-
-/* ================= FORM ================= */
 
 input, select, textarea{
-    border-radius:16px !important;
+    border-radius:14px !important;
     border:1px solid #e2e8f0 !important;
-    padding:12px 16px !important;
+    padding:10px 14px !important;
     font-size:14px !important;
-    transition:0.3s ease;
+    transition:all 0.25s ease;
     background:#fff !important;
 }
 
 input:focus, select:focus, textarea:focus{
     border-color:var(--primary) !important;
     box-shadow:0 0 0 4px rgba(37,99,235,0.15);
-    transform:scale(1.02);
+    outline:none;
 }
 
-/* ================= BUTTONS ================= */
-
+/* ===== BUTTONS ===== */
 .btn{
-    border-radius:16px;
+    border-radius:14px;
     font-weight:600;
-    padding:10px 18px;
-    transition:0.3s cubic-bezier(.4,2,.6,1);
-    position:relative;
-    overflow:hidden;
+    transition:all 0.25s ease;
 }
 
 .btn-primary{
@@ -151,43 +99,35 @@ input:focus, select:focus, textarea:focus{
 }
 
 .btn-primary:hover{
-    transform:translateY(-4px);
-    box-shadow:0 18px 40px rgba(37,99,235,0.4);
+    transform:translateY(-3px);
+    box-shadow:0 15px 35px rgba(37,99,235,0.4);
 }
 
-/* Ripple effect */
-.btn:active::after{
-    content:"";
-    position:absolute;
-    width:120px;
-    height:120px;
-    background:rgba(255,255,255,0.4);
-    border-radius:50%;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%) scale(0);
-    animation:ripple 0.6s linear;
+.btn-success{
+    border-radius:14px;
 }
 
-@keyframes ripple{
-    to{
-        transform:translate(-50%,-50%) scale(4);
-        opacity:0;
-    }
+.btn-danger{
+    border-radius:12px;
 }
 
-/* ================= TABLE ================= */
-
+/* ===== TABLE ===== */
 .table{
-    border-radius:20px;
+    border-radius:18px;
     overflow:hidden;
-    background:#fff;
-    box-shadow:var(--shadow);
+    background:#ffffff;
+    box-shadow:0 15px 40px rgba(0,0,0,0.05);
 }
 
 .table thead{
     background:linear-gradient(135deg,var(--primary),var(--primary-dark));
     color:#fff;
+}
+
+.table thead th{
+    border:none;
+    font-size:13px;
+    font-weight:600;
 }
 
 .table tbody tr{
@@ -198,72 +138,43 @@ input:focus, select:focus, textarea:focus{
     background:#eef2ff;
 }
 
-/* ================= RECEIPT ================= */
-
+/* ===== RECEIPT ===== */
 #receipt_area{
     min-height:200px;
-    border-radius:18px;
-    padding:20px;
-    background:#fff;
-    box-shadow:inset 0 0 25px rgba(0,0,0,0.05);
+    border-radius:16px;
+    padding:18px;
+    background:#ffffff;
+    box-shadow:inset 0 0 20px rgba(0,0,0,0.03);
+    font-size:13px;
 }
 
-/* ================= CALCULATOR ================= */
-
-.calculator{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-}
-
+/* ===== CALCULATOR ===== */
 .calculator .btn{
-    height:50px;
-    font-size:16px;
+    border-radius:14px;
 }
 
 #calc_screen{
-    height:45px;
-    border-radius:16px;
+    height:42px;
+    border-radius:14px;
     border:1px solid #e2e8f0;
-    padding:12px;
+    padding:10px 12px;
     text-align:right;
-    font-size:16px;
+    font-size:15px;
 }
 
-/* ================= STAT CARDS ================= */
-
-.stat-card{
-    border-radius:20px;
-    padding:22px;
-    color:#fff;
-    background:linear-gradient(135deg,#2563eb,#4f46e5);
-    box-shadow:0 20px 40px rgba(37,99,235,0.3);
-    transition:0.4s ease;
-}
-
-.stat-card:hover{
-    transform:translateY(-8px);
-}
-
-/* ================= SCROLLBAR ================= */
-
-::-webkit-scrollbar{
-    width:8px;
-}
-::-webkit-scrollbar-thumb{
-    background:linear-gradient(var(--primary),var(--primary-dark));
-    border-radius:10px;
-}
-
-/* ================= DARK MODE ================= */
-
+/* ===== DARK MODE SUPPORT (Already works with your toggle) ===== */
 body.dark{
     background:#0f172a;
     color:#f1f5f9;
 }
 
-body.dark .card::after{
-    background:rgba(30,41,59,0.95);
+body.dark .card{
+    background:rgba(30,41,59,0.85);
+    color:#f1f5f9;
+}
+
+body.dark .navbar{
+    background:#020617 !important;
 }
 
 body.dark input,
@@ -281,16 +192,4 @@ body.dark .table{
 
 body.dark .table thead{
     background:#1e40af;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:768px){
-    .btn{
-        width:100%;
-    }
-
-    .calculator{
-        grid-template-columns:repeat(3,1fr);
-    }
 }
