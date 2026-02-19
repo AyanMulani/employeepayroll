@@ -88,7 +88,8 @@ body{
                 <div class="card-body">
                     <h4 class="login-title text-center">HR Payroll System</h4>
 
-                    <form method="post">
+                    <form method="POST" action="{{ url_for('login') }}">
+
                         <div class="mb-3">
                             <label class="form-label">Username</label>
                             <input name="username" class="form-control" placeholder="Enter username" required>
