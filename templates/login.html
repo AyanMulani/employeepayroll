@@ -2,146 +2,159 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Login - EPMS</title>
+<title>EPMS – Secure Login</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 
 <style>
 
-/* ===== Animated Blue Background ===== */
+/* ===== Deep Premium Background ===== */
 body{
-    min-height:100vh;
-    background: linear-gradient(-45deg,#1e3c72,#2a5298,#2563eb,#1e40af);
-    background-size:400% 400%;
-    animation: gradientMove 8s ease infinite;
+    margin:0;
+    height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-family: 'Segoe UI', sans-serif;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(59,130,246,0.15), transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(34,197,94,0.12), transparent 40%),
+        linear-gradient(135deg,#0f172a,#1e293b,#0f172a);
 }
 
-@keyframes gradientMove{
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-
-/* ===== Card Styling ===== */
+/* ===== Main Card ===== */
 .login-card{
-    border:none;
-    border-radius:25px;
-    box-shadow:0 30px 80px rgba(0,0,0,0.25);
-    padding:40px;
-    background:rgba(255,255,255,0.95);
-    backdrop-filter:blur(15px);
-    transition:0.3s ease;
-}
-
-.login-card:hover{
-    transform:translateY(-5px);
-}
-
-/* ===== Logo Circle ===== */
-.logo-circle{
-    width:80px;
-    height:80px;
-    background:#2563eb;
-    border-radius:50%;
-    margin:0 auto 20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    width:100%;
+    max-width:440px;
+    padding:60px;
+    border-radius:28px;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(25px);
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.1);
     color:white;
-    font-size:24px;
-    font-weight:700;
-    letter-spacing:2px;
-    box-shadow:0 10px 30px rgba(37,99,235,0.4);
 }
 
-/* ===== Title ===== */
-.login-title{
-    font-weight:600;
-    margin-bottom:25px;
-    color:#1e293b;
+/* ===== Logo ===== */
+.logo{
+    text-align:center;
+    font-size:30px;
+    font-weight:700;
+    letter-spacing:4px;
+    margin-bottom:8px;
+}
+
+.logo span{
+    background:linear-gradient(90deg,#3b82f6,#22c55e);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+    text-align:center;
+    font-size:14px;
+    opacity:0.6;
+    margin-bottom:40px;
 }
 
 /* ===== Inputs ===== */
+.input-wrapper{
+    position:relative;
+    margin-bottom:22px;
+}
+
+.input-wrapper i{
+    position:absolute;
+    top:50%;
+    left:18px;
+    transform:translateY(-50%);
+    opacity:0.6;
+}
+
 .form-control{
+    width:100%;
+    padding:14px 20px 14px 50px;
     border-radius:14px;
-    padding:12px 15px;
-    border:1px solid #d1d5db;
-    transition:0.2s ease;
+    border:1px solid rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.05);
+    color:white;
+    transition:all 0.25s ease;
+}
+
+.form-control::placeholder{
+    color:rgba(255,255,255,0.5);
 }
 
 .form-control:focus{
-    border-color:#2563eb;
-    box-shadow:0 0 0 3px rgba(37,99,235,0.2);
+    background:rgba(255,255,255,0.08);
+    border-color:#3b82f6;
+    box-shadow:0 0 0 3px rgba(59,130,246,0.25);
 }
 
 /* ===== Button ===== */
-.btn-primary{
+.btn-login{
     width:100%;
+    padding:14px;
     border-radius:14px;
-    padding:12px;
-    font-weight:600;
-    background:#16a34a;
     border:none;
-    transition:0.3s ease;
+    font-weight:600;
+    background:linear-gradient(90deg,#22c55e,#16a34a);
+    color:white;
+    transition:all 0.25s ease;
 }
 
-.btn-primary:hover{
-    background:#15803d;
+.btn-login:hover{
     transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(34,197,94,0.4);
 }
 
-/* ===== Footer Text ===== */
+/* ===== Footer ===== */
 .small-text{
-    font-size:13px;
-    margin-top:20px;
+    margin-top:35px;
     text-align:center;
-    color:#6b7280;
+    font-size:13px;
+    opacity:0.5;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-5 col-lg-4">
-            <div class="card login-card text-center">
+<div class="login-card">
 
-                <div class="logo-circle">
-                    EPMS
-                </div>
-
-                <h4 class="login-title">Employee Payroll Management System</h4>
-
-                <form method="POST" action="{{ url_for('login') }}">
-
-                    <div class="mb-3 text-start">
-                        <label class="form-label">Username</label>
-                        <input name="username" class="form-control" placeholder="Enter username" required>
-                    </div>
-
-                    <div class="mb-3 text-start">
-                        <label class="form-label">Password</label>
-                        <input name="password" type="password" class="form-control" placeholder="Enter password" required>
-                    </div>
-
-                    <button class="btn btn-primary mt-2">Login</button>
-                </form>
-
-                <div class="small-text">
-                    © 2026 EPMS Team
-                </div>
-
-            </div>
-        </div>
+    <div class="logo">
+        <span>EPMS</span>
     </div>
+
+    <div class="subtitle">
+        Employee Payroll Management System
+    </div>
+
+    <form method="POST" action="{{ url_for('login') }}">
+
+        <div class="input-wrapper">
+            <i class="fa fa-user"></i>
+            <input type="text" name="username" class="form-control" placeholder="Username" required>
+        </div>
+
+        <div class="input-wrapper">
+            <i class="fa fa-lock"></i>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+
+        <button class="btn-login">Sign In</button>
+
+    </form>
+
+    <div class="small-text">
+        © 2026 EPMS Enterprise Cloud
+    </div>
+
 </div>
 
 </body>
