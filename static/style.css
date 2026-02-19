@@ -51,7 +51,10 @@ body{
     box-shadow:0 20px 50px rgba(0,0,0,0.07);
     transition:all 0.3s ease;
 }
+.btn btn-success{
 
+    margin-left: 25px;
+}
 .card:hover{
     transform:translateY(-5px);
     box-shadow:0 30px 60px rgba(37,99,235,0.15);
