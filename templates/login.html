@@ -58,34 +58,7 @@ body{
     text-align:center;
     font-size:14px;
     opacity:0.6;
-    margin-bottom:30px;
-}
-
-/* ===== Role Buttons ===== */
-.role-toggle{
-    display:flex;
-    gap:10px;
-    margin-bottom:25px;
-}
-
-.role-toggle button{
-    flex:1;
-    padding:10px;
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,0.2);
-    background:rgba(255,255,255,0.05);
-    color:white;
-    font-weight:500;
-    transition:0.3s;
-}
-
-.role-toggle button.active{
-    background:linear-gradient(90deg,#3b82f6,#2563eb);
-    border:none;
-}
-
-.role-toggle button:hover{
-    opacity:0.8;
+    margin-bottom:40px;
 }
 
 /* ===== Inputs ===== */
@@ -162,22 +135,11 @@ body{
         Employee Payroll Management System
     </div>
 
-    <!-- Role Toggle -->
-    <div class="role-toggle">
-        <button type="button" id="adminBtn" class="active" onclick="setRole('admin')">
-            <i class="fa fa-user-shield"></i> Admin
-        </button>
-        <button type="button" id="empBtn" onclick="setRole('employee')">
-            <i class="fa fa-user"></i> Employee
-        </button>
-    </div>
-
     <form method="POST" action="{{ url_for('login') }}">
-        <input type="hidden" name="login_type" id="login_type" value="admin">
 
         <div class="input-wrapper">
             <i class="fa fa-user"></i>
-            <input type="text" name="username" class="form-control" placeholder="Username / Email" required>
+            <input type="text" name="username" class="form-control" placeholder="Username" required>
         </div>
 
         <div class="input-wrapper">
@@ -186,6 +148,7 @@ body{
         </div>
 
         <button class="btn-login">Sign In</button>
+
     </form>
 
     <div class="small-text">
@@ -193,20 +156,6 @@ body{
     </div>
 
 </div>
-
-<script>
-function setRole(role){
-    document.getElementById('login_type').value = role;
-
-    if(role === 'admin'){
-        document.getElementById('adminBtn').classList.add('active');
-        document.getElementById('empBtn').classList.remove('active');
-    }else{
-        document.getElementById('empBtn').classList.add('active');
-        document.getElementById('adminBtn').classList.remove('active');
-    }
-}
-</script>
 
 </body>
 </html>
