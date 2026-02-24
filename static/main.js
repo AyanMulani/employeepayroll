@@ -13,18 +13,33 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
   // search button
-  var search = document.getElementById('search');
-  if(search) search.addEventListener('click', function(){
-    var code = document.getElementById('emp_code').value.trim();
-    if(!code) return alert('Enter code');
-    fetch('/employee/search?code='+encodeURIComponent(code)).then(r=>r.json()).then(j=>{
-      if(!j.found) return alert('Not found');
-      var e=j.emp;
-      ['first_name','last_name','contact','email','address','basic_salary'].forEach(function(k){ if(document.getElementById(k)) document.getElementById(k).value = e[k]||''; });
-      document.getElementById('pay_emp_code').value = e.emp_code||'';
-      document.getElementById('save_status').innerText = 'Loaded '+e.emp_code;
+  // search button
+var search = document.getElementById('search');
+if(search) search.addEventListener('click', function(){
+  var code = document.getElementById('emp_code').value.trim();
+  if(!code) return alert('Enter code');
+  fetch('/employee/search?code='+encodeURIComponent(code)).then(r=>r.json()).then(j=>{
+    if(!j.found) return alert('Not found');
+    var e=j.emp;
+
+    ['first_name','last_name','contact','email','address','basic_salary']
+    .forEach(function(k){
+      if(document.getElementById(k))
+        document.getElementById(k).value = e[k]||'';
     });
+
+    document.getElementById('pay_emp_code').value = e.emp_code||'';
+
+    // 🔥 ADD THESE 4 LINES
+    if(document.getElementById('department_id'))
+        document.getElementById('department_id').value = e.department_id || '';
+
+    if(document.getElementById('role_id'))
+        document.getElementById('role_id').value = e.role_id || '';
+
+    document.getElementById('save_status').innerText = 'Loaded '+e.emp_code;
   });
+});
   // table row click
   document.querySelectorAll('#emp_table tbody tr').forEach(function(row){ row.addEventListener('click', function(){ document.getElementById('emp_code').value=this.cells[0].innerText.trim(); document.getElementById('search').click(); }); });
   // calculator
