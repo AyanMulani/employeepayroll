@@ -191,9 +191,21 @@ def search_employee():
         try: emp = Employee.query.get(int(code))
         except: emp=None
     if not emp: return jsonify({'found':False})
-    data = {'id':emp.id,'emp_code':emp.emp_code,'first_name':emp.first_name,'last_name':emp.last_name,
-            'department_id':emp.department_id,'role_id':emp.role_id,'basic_salary':emp.basic_salary,
-            'contact':emp.contact,'email':emp.email,'address':emp.address,'photo':emp.photo}
+    data = {
+    'id': emp.id,
+    'emp_code': emp.emp_code,
+    'first_name': emp.first_name,
+    'last_name': emp.last_name,
+    'department_id': emp.department_id,
+    'department_name': emp.department.name if emp.department else '',
+    'role_id': emp.role_id,
+    'role_name': emp.role.name if emp.role else '',
+    'basic_salary': emp.basic_salary,
+    'contact': emp.contact,
+    'email': emp.email,
+    'address': emp.address,
+    'photo': emp.photo
+}
     return jsonify({'found':True,'emp':data})
 
 # Attendance
